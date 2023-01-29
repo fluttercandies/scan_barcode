@@ -50,6 +50,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return buildNavigatorItem(
       'Show dialog ',
       BarcodeScanPage(
+        title: 'Show dialog to show barcode list',
         onHandleBarcodeList: (List<Barcode> barCode) async {
           await showDialog(
             context: context,

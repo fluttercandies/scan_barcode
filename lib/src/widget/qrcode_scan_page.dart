@@ -6,9 +6,11 @@ typedef OnHandleBarcodeList = Future<void> Function(List<Barcode> barCode);
 class BarcodeScanPage extends StatefulWidget {
   const BarcodeScanPage({
     Key? key,
+    required this.title,
     required this.onHandleBarcodeList,
   }) : super(key: key);
 
+  final String title;
   final OnHandleBarcodeList onHandleBarcodeList;
 
   @override
@@ -20,7 +22,7 @@ class _BarcodeScanPageState extends State<BarcodeScanPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('QR Camera Example'),
+        title: Text(widget.title),
       ),
       body: BarcodeWidget(
         onHandleBarcodeList: (List<Barcode> barCode) {
