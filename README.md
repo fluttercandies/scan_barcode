@@ -39,7 +39,7 @@ dependency_overrides:
   google_mlkit_barcode_scanning:
     git:
       url: https://gitee.com/kikt/Google-Ml-Kit-plugin.git
-      ref: 3b2cf6af2e26d51fb5b6e215ad95c3609100762b
+      ref: barcode-0.5.0-forked
       path: packages/google_mlkit_barcode_scanning
 ```
 
