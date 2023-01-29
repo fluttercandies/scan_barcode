@@ -48,20 +48,49 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Widget _buildCameraScan() {
     return buildNavigatorItem(
-      'Open scan page',
-      const QrcodeScanPage(),
+      'Show dialog ',
+      QrcodeScanPage(
+        onHandleBarcodeList: (List<Barcode> barCode) async {
+          await showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+              title: const Text('Barcode list'),
+              content: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  for (final barcode in barCode)
+                    ListTile(
+                      title: Text(barcode.rawValue ?? ''),
+                      subtitle: Text(
+                          'type: ${barcode.type}, format: ${barcode.format}'),
+                    ),
+                ],
+              ),
+            ),
+          );
+        },
+      ),
     );
   }
 
   Widget buildNavigatorItem(String title, Widget targetWidget) {
-    return ElevatedButton(
-      onPressed: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => targetWidget),
-        );
-      },
-      child: Text(title),
+    return SizedBox(
+      width: double.infinity,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
+          horizontal: 10,
+          vertical: 5,
+        ),
+        child: ElevatedButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => targetWidget),
+            );
+          },
+          child: Text(title),
+        ),
+      ),
     );
   }
 }
