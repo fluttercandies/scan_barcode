@@ -5,8 +5,8 @@ import 'package:qr_camera/src/helper/qr_handler.dart';
 
 import 'camera_widget.dart';
 
-class QRWidget extends StatefulWidget {
-  const QRWidget({
+class BarcodeWidget extends StatefulWidget {
+  const BarcodeWidget({
     Key? key,
     required this.onHandleBarcodeList,
   }) : super(key: key);
@@ -14,10 +14,10 @@ class QRWidget extends StatefulWidget {
   final Future<void> Function(List<Barcode>) onHandleBarcodeList;
 
   @override
-  State<QRWidget> createState() => _QRWidgetState();
+  State<BarcodeWidget> createState() => _BarcodeWidgetState();
 }
 
-class _QRWidgetState extends State<QRWidget> {
+class _BarcodeWidgetState extends State<BarcodeWidget> {
   final handler = QrcodeHandler();
 
   @override

@@ -49,7 +49,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget _buildCameraScan() {
     return buildNavigatorItem(
       'Show dialog ',
-      QrcodeScanPage(
+      BarcodeScanPage(
         onHandleBarcodeList: (List<Barcode> barCode) async {
           await showDialog(
             context: context,
