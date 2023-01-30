@@ -1,8 +1,6 @@
-import 'dart:ui';
+import 'package:qr_camera/qr_camera.dart';
 
-import 'package:camera/camera.dart';
 import 'package:flutter/foundation.dart';
-import 'package:google_mlkit_barcode_scanning/google_mlkit_barcode_scanning.dart';
 
 import 'logger.dart';
 

@@ -32,16 +32,22 @@ class _CameraWidgetState extends State<CameraWidget> {
 
     controller = cameraController;
     try {
-      await controller?.initialize();
+      await cameraController.initialize();
+      if (cameraController.size?.aspectRatio != null) {
+        aspectRatio = cameraController.size!.aspectRatio;
+      }
+
       if (controller != null) {
-        widget.onCameraControllerCreate(controller!);
+        widget.onCameraControllerCreate(cameraController);
       }
     } catch (e) {
       setState(() {});
       return;
     }
 
-    controller?.startImageStream((image) async {
+    controller = cameraController;
+
+    cameraController.startImageStream((image) async {
       if (controller == null) return;
       final camera = controller!.description;
       await widget.onImageCaptured(camera, image);
@@ -83,12 +89,20 @@ class _CameraWidgetState extends State<CameraWidget> {
     await controller?.dispose();
   }
 
+  var aspectRatio = 720 / 1280;
+
   @override
   Widget build(BuildContext context) {
     final controller = this.controller;
     if (controller == null) {
-      return const Center(
-        child: CircularProgressIndicator(),
+      return AspectRatio(
+        aspectRatio: aspectRatio,
+        child: Container(
+          color: Colors.black,
+          child: const Center(
+            child: CircularProgressIndicator(),
+          ),
+        ),
       );
     }
     return Center(
