@@ -1,17 +1,15 @@
-import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:google_mlkit_barcode_scanning/google_mlkit_barcode_scanning.dart';
-import 'package:qr_camera/src/helper/qr_handler.dart';
-
-import 'camera_widget.dart';
+import 'package:qr_camera/qr_camera.dart';
 
 class BarcodeWidget extends StatefulWidget {
   const BarcodeWidget({
     Key? key,
     required this.onHandleBarcodeList,
+    required this.config,
   }) : super(key: key);
 
-  final Future<void> Function(List<Barcode>) onHandleBarcodeList;
+  final OnHandleBarcodeList onHandleBarcodeList;
+  final ScanConfig config;
 
   @override
   State<BarcodeWidget> createState() => _BarcodeWidgetState();
@@ -32,6 +30,7 @@ class _BarcodeWidgetState extends State<BarcodeWidget> {
           },
         );
       },
+      config: widget.config,
     );
   }
 }

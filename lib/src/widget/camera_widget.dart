@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:camera/camera.dart';
+import 'package:qr_camera/qr_camera.dart';
 
 class CameraWidget extends StatefulWidget {
   const CameraWidget({
     Key? key,
     required this.onImageCaptured,
+    required this.config,
   }) : super(key: key);
 
   final Function(CameraDescription camera, CameraImage image) onImageCaptured;
+  final ScanConfig config;
 
   @override
   State<CameraWidget> createState() => _CameraWidgetState();
@@ -20,10 +22,15 @@ class _CameraWidgetState extends State<CameraWidget> {
 
   late CameraDescription camera;
 
+  bool noCamera = false;
+
   Future<void> _initCamera() async {
     final cameras = await availableCameras();
 
     if (cameras.isEmpty) {
+      setState(() {
+        noCamera = true;
+      });
       return;
     }
 
@@ -82,12 +89,7 @@ class _CameraWidgetState extends State<CameraWidget> {
     return Center(
       child: GestureDetector(
         onTapDown: (details) async {
-          // // 对焦, point 是相对于屏幕的坐标
-          // final x = details.localPosition.dx / context.size!.width;
-          // final y = details.localPosition.dy / context.size!.height;
-          // controller.setFocusPoint(Offset(x, y));
-
-          // 自动对焦
+          // click to auto focus
           await controller.setFocusMode(FocusMode.locked);
           await controller.setFocusMode(FocusMode.auto);
         },

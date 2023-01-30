@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:qr_camera/qr_camera.dart';
 
-typedef OnHandleBarcodeList = Future<void> Function(List<Barcode> barCode);
-
 class BarcodeScanPage extends StatefulWidget {
   const BarcodeScanPage({
     Key? key,
     required this.title,
     required this.onHandleBarcodeList,
+    this.config,
   }) : super(key: key);
 
   final String title;
   final OnHandleBarcodeList onHandleBarcodeList;
+  final ScanConfig? config;
 
   @override
   State<BarcodeScanPage> createState() => _BarcodeScanPageState();
@@ -25,6 +25,7 @@ class _BarcodeScanPageState extends State<BarcodeScanPage> {
         title: Text(widget.title),
       ),
       body: BarcodeWidget(
+        config: widget.config ?? ScanConfig(),
         onHandleBarcodeList: (List<Barcode> barCode) {
           return widget.onHandleBarcodeList(barCode);
         },
