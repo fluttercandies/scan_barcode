@@ -11,7 +11,7 @@ class BarcodeScanPage extends StatefulWidget {
 
   final String title;
   final OnHandleBarcodeList onHandleBarcodeList;
-  final ScanConfig? config;
+  final ScanValue? config;
 
   @override
   State<BarcodeScanPage> createState() => _BarcodeScanPageState();
@@ -25,7 +25,7 @@ class _BarcodeScanPageState extends State<BarcodeScanPage> {
         title: Text(widget.title),
       ),
       body: BarcodeWidget(
-        config: widget.config ?? ScanConfig(),
+        scanValue: widget.config ?? ScanValue(),
         onHandleBarcodeList: (List<Barcode> barCode) {
           return widget.onHandleBarcodeList(barCode);
         },

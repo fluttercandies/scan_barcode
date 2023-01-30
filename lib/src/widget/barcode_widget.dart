@@ -5,14 +5,17 @@ class BarcodeWidget extends StatefulWidget {
   const BarcodeWidget({
     Key? key,
     required this.onHandleBarcodeList,
-    required this.config,
+    required this.scanValue,
+    this.onCameraControllerCreate
   }) : super(key: key);
 
   final OnHandleBarcodeList onHandleBarcodeList;
-  final ScanConfig config;
+  final ScanValue scanValue;
+  final OnCameraControllerCreate? onCameraControllerCreate;
 
   @override
   State<BarcodeWidget> createState() => _BarcodeWidgetState();
+
 }
 
 class _BarcodeWidgetState extends State<BarcodeWidget> {
@@ -30,7 +33,10 @@ class _BarcodeWidgetState extends State<BarcodeWidget> {
           },
         );
       },
-      config: widget.config,
+      config: widget.scanValue.cameraConfig,
+      onCameraControllerCreate: (CameraController controller) {
+        widget.onCameraControllerCreate?.call(controller);
+      },
     );
   }
 }

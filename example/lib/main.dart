@@ -1,5 +1,8 @@
+import 'package:example/examples/change_camera_config_example.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_camera/qr_camera.dart';
+
+import 'examples/show_dialog_example.dart';
 
 void main() {
   showLog();
@@ -40,6 +43,7 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           children: [
             _buildCameraScan(),
+            _buildChangeCameraConfig(),
           ],
         ),
       ),
@@ -48,29 +52,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Widget _buildCameraScan() {
     return buildNavigatorItem(
-      'Show dialog ',
-      BarcodeScanPage(
-        title: 'Show dialog to show barcode list',
-        onHandleBarcodeList: (List<Barcode> barCode) async {
-          await showDialog(
-            context: context,
-            builder: (context) => AlertDialog(
-              title: const Text('Barcode list'),
-              content: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  for (final barcode in barCode)
-                    ListTile(
-                      title: Text(barcode.rawValue ?? ''),
-                      subtitle: Text(
-                          'type: ${barcode.type}, format: ${barcode.format}'),
-                    ),
-                ],
-              ),
-            ),
-          );
-        },
-      ),
+      'Show dialog when scanned',
+      const ShowDialogExample(),
     );
   }
 
@@ -92,6 +75,13 @@ class _MyHomePageState extends State<MyHomePage> {
           child: Text(title),
         ),
       ),
+    );
+  }
+
+  Widget _buildChangeCameraConfig() {
+    return buildNavigatorItem(
+      'Change camera config',
+      const ChangeCameraConfigExample(),
     );
   }
 }

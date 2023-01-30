@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:qr_camera/qr_camera.dart';
 
-class ScanConfig extends ChangeNotifier {
-  ScanConfig({
+part 'barcode.dart';
+
+part 'camera.dart';
+
+part 'ui.dart';
+
+class ScanValue extends ChangeNotifier {
+  ScanValue({
     this.cameraConfig = const CameraConfig(),
     this.barcodeConfig = const BarcodeConfig(),
     this.uiConfig = const UIConfig(),
@@ -11,6 +17,7 @@ class ScanConfig extends ChangeNotifier {
   CameraConfig cameraConfig;
   BarcodeConfig barcodeConfig;
   UIConfig uiConfig;
+  CameraController? cameraController;
 
   void updateCameraConfig(CameraConfig config) {
     cameraConfig = config;
@@ -26,44 +33,4 @@ class ScanConfig extends ChangeNotifier {
     uiConfig = config;
     notifyListeners();
   }
-}
-
-class CameraConfig {
-  const CameraConfig({
-    this.isAutoFocus = true,
-    this.clickToFocus = true,
-  });
-
-  final bool isAutoFocus;
-  final bool clickToFocus;
-
-  CameraConfig copyWith({
-    bool? isAutoFocus,
-    bool? clickToFocus,
-  }) {
-    return CameraConfig(
-      isAutoFocus: isAutoFocus ?? this.isAutoFocus,
-      clickToFocus: clickToFocus ?? this.clickToFocus,
-    );
-  }
-}
-
-class BarcodeConfig {
-  const BarcodeConfig({
-    this.formats = const [BarcodeFormat.all],
-  });
-
-  final List<BarcodeFormat> formats;
-
-  BarcodeConfig copyWith({
-    List<BarcodeFormat>? formats,
-  }) {
-    return BarcodeConfig(
-      formats: formats ?? this.formats,
-    );
-  }
-}
-
-class UIConfig {
-  const UIConfig();
 }

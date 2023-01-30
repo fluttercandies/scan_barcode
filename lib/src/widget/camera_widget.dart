@@ -6,61 +6,65 @@ class CameraWidget extends StatefulWidget {
     Key? key,
     required this.onImageCaptured,
     required this.config,
+    required this.onCameraControllerCreate,
   }) : super(key: key);
 
   final Function(CameraDescription camera, CameraImage image) onImageCaptured;
-  final ScanConfig config;
+  final CameraConfig config;
+  final OnCameraControllerCreate onCameraControllerCreate;
 
   @override
   State<CameraWidget> createState() => _CameraWidgetState();
 }
 
 class _CameraWidgetState extends State<CameraWidget> {
-  CameraController? _controller;
+  CameraConfig get config => widget.config;
 
-  CameraController get controller => _controller!;
-
-  late CameraDescription camera;
-
-  bool noCamera = false;
+  CameraController? controller;
 
   Future<void> _initCamera() async {
-    final cameras = await availableCameras();
-
-    if (cameras.isEmpty) {
-      setState(() {
-        noCamera = true;
-      });
+    final cameraController =
+        await config.cameraControllerCreator(widget.config);
+    if (cameraController == null) {
+      setState(() {});
       return;
     }
 
-    camera = cameras.first;
-
-    for (final camera in cameras) {
-      if (camera.lensDirection == CameraLensDirection.back) {
-        this.camera = camera;
-        break;
+    controller = cameraController;
+    try {
+      await controller?.initialize();
+      if (controller != null) {
+        widget.onCameraControllerCreate(controller!);
       }
+    } catch (e) {
+      setState(() {});
+      return;
     }
 
-    _controller = CameraController(
-      camera,
-      ResolutionPreset.high,
-      enableAudio: false,
-    );
-
-    await controller.initialize();
-
-    await controller.startImageStream((image) {
-      widget.onImageCaptured(camera, image);
+    controller?.startImageStream((image) async {
+      if (controller == null) return;
+      final camera = controller!.description;
+      await widget.onImageCaptured(camera, image);
     });
-
-    setState(() {
-      isInit = true;
-    });
+    setState(() {});
   }
 
-  var isInit = false;
+  Future<void> recreateCamera() async {
+    if (controller != null) {
+      controller?.stopImageStream();
+      controller?.dispose();
+      controller = null;
+    }
+    await _initCamera();
+  }
+
+  @override
+  void didUpdateWidget(covariant CameraWidget oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.config != widget.config) {
+      recreateCamera();
+    }
+  }
 
   @override
   void initState() {
@@ -75,13 +79,14 @@ class _CameraWidgetState extends State<CameraWidget> {
   }
 
   Future<void> _dispose() async {
-    await controller.stopImageStream();
-    await controller.dispose();
+    await controller?.stopImageStream();
+    await controller?.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    if (!isInit) {
+    final controller = this.controller;
+    if (controller == null) {
       return const Center(
         child: CircularProgressIndicator(),
       );
