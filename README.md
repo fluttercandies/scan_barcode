@@ -1,6 +1,6 @@
 # scan_barcode
 
-The plugin is a plugin for scanning barcodes. Only support android and ios. Because the plugin is based on mlkit.
+The plugin is a plugin for scanning barcodes. Only support android and ios. Because the plugin is based on Google mlkit.
 
 ## Getting Started
 
@@ -13,7 +13,8 @@ See the package [scan_barcode](https://pub.dev/packages/scan_barcode) for more v
 
 `import 'package:scan_barcode/scan_barcode.dart';`
 
-The plugin is developed by version 3.1.0 of flutter.
+The plugin is developed by version 3.1.0 of flutter, so it is recommended to use version 3.1.0 or above.
+If you want to use version 2.0.0, click [here](#using-in-flutter-2x).
 
 ## Example
 
@@ -35,45 +36,46 @@ class ShowDialogExample extends StatelessWidget {
       title: 'Show dialog when scanned',
       onHandleBarcodeList: (List<Barcode> barCode) async {
         if (barCode.isEmpty) return;
-        await showBarcodeListDialog(context, barCode); // The await is important, if you don't await, multiple dialogs will be shown.
+        await showBarcodeListDialog(
+            context, barCode); // The await is important, if you don't await, multiple dialogs will be shown.
       },
     );
   }
 
-  Future<void> showBarcodeListDialog(
-      BuildContext context, List<Barcode> barCode) async {
+  Future<void> showBarcodeListDialog(BuildContext context, List<Barcode> barCode) async {
     await showDialog(
       context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Barcode list'),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            for (final barcode in barCode)
-              ListTile(
-                title: Text(barcode.rawValue ?? ''),
-                subtitle:
+      builder: (context) =>
+          AlertDialog(
+            title: const Text('Barcode list'),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                for (final barcode in barCode)
+                  ListTile(
+                    title: Text(barcode.rawValue ?? ''),
+                    subtitle:
                     Text('type: ${barcode.type}, format: ${barcode.format}'),
-                trailing: IconButton(
-                  icon: const Icon(Icons.copy),
-                  onPressed: () {
-                    Clipboard.setData(
-                      ClipboardData(text: barcode.rawValue ?? ''),
-                    );
-                  },
-                ),
+                    trailing: IconButton(
+                      icon: const Icon(Icons.copy),
+                      onPressed: () {
+                        Clipboard.setData(
+                          ClipboardData(text: barcode.rawValue ?? ''),
+                        );
+                      },
+                    ),
+                  ),
+              ],
+            ),
+            actions: [
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text('OK'),
               ),
-          ],
-        ),
-        actions: [
-          ElevatedButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            child: const Text('OK'),
+            ],
           ),
-        ],
-      ),
     );
   }
 }
@@ -85,9 +87,11 @@ class ShowDialogExample extends StatelessWidget {
 - [camera](https://pub.dev/packages/camera)
 - [google_mlkit_barcode_scanning](https://pub.dev/packages/google_mlkit_barcode_scanning)
 
-## For Flutter 2.x.x
+## Common
 
-The `google_mlkit_barcode_scanning` is not support flutter 2.x.x, so you need to use the fork version.
+### Using in flutter 2.x
+
+The dependency `google_mlkit_barcode_scanning` is not support flutter 2.x.x, so need use forked version.
 
 add the following to your `pubspec.yaml`:
 
