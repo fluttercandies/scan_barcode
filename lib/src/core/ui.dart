@@ -8,12 +8,12 @@ typedef BarcodeItemBuilder = Widget Function(
 class UIConfig {
   const UIConfig({
     this.barcodeCanvasBuilder,
-    this.barcodeRectItemBuilder,
+    this.barcodeOverlayBuilder,
   });
 
   final BarcodeItemBuilder? barcodeCanvasBuilder;
 
-  final BarcodeRectItemBuilder? barcodeRectItemBuilder;
+  final BarcodeOverlayBuilder? barcodeOverlayBuilder;
 }
 
 Widget defaultBuildBarcodeRect(

@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:qr_camera/qr_camera.dart';
+import 'package:scan_barcode/scan_barcode.dart';
 
-class ChangeQrcodeRectExample extends StatefulWidget {
-  const ChangeQrcodeRectExample({Key? key}) : super(key: key);
+class CustomBarcodeOverlayExample extends StatefulWidget {
+  const CustomBarcodeOverlayExample({Key? key}) : super(key: key);
 
   @override
-  State<ChangeQrcodeRectExample> createState() =>
-      _ChangeQrcodeRectExampleState();
+  State<CustomBarcodeOverlayExample> createState() =>
+      _CustomBarcodeOverlayExampleState();
 }
 
-class _ChangeQrcodeRectExampleState extends State<ChangeQrcodeRectExample> {
+class _CustomBarcodeOverlayExampleState extends State<CustomBarcodeOverlayExample> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,7 +22,12 @@ class _ChangeQrcodeRectExampleState extends State<ChangeQrcodeRectExample> {
             child: BarcodeWidget(
               scanValue: ScanValue(
                 uiConfig: UIConfig(
-                  barcodeRectItemBuilder: _buildBarcodeRectItem,
+                  barcodeOverlayBuilder: _buildBarcodeRectItem,
+                ),
+                barcodeConfig: const BarcodeConfig(
+                  formats: [
+                    BarcodeFormat.all,
+                  ],
                 ),
               ),
               onHandleBarcodeList: (List<Barcode> barCode) {

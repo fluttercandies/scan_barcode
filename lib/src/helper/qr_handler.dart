@@ -1,4 +1,4 @@
-import 'package:qr_camera/qr_camera.dart';
+import 'package:scan_barcode/scan_barcode.dart';
 
 import 'package:flutter/foundation.dart';
 
@@ -11,10 +11,18 @@ class BarcodeData {
   BarcodeData(this.barcodeList, this.image);
 }
 
-class QrcodeHandler {
-  // late final List<BarcodeFormat> formats = [BarcodeFormat.all];
-  late final List<BarcodeFormat> formats = [BarcodeFormat.qrCode];
-  late final barcodeScanner = BarcodeScanner(formats: formats);
+class BarcodeHandler {
+  List<BarcodeFormat> formats;
+
+  BarcodeScanner get barcodeScanner => BarcodeScanner(formats: formats);
+
+  BarcodeHandler({
+    this.formats = const [BarcodeFormat.qrCode],
+  });
+
+  void changeFormats(List<BarcodeFormat> formats) {
+    this.formats = formats;
+  }
 
   /// 处理相机图像中
   var _isProcessing = false;
@@ -22,8 +30,7 @@ class QrcodeHandler {
   Future<void> handleCameraImage(
     CameraDescription camera,
     CameraImage cameraImage,
-    Future<void> Function(BarcodeData barcodeData)
-        onHandleBarcode,
+    Future<void> Function(BarcodeData barcodeData) onHandleBarcode,
   ) async {
     // print('handle image: ${cameraImage.width}x${cameraImage.height}');
 
@@ -66,31 +73,36 @@ class QrcodeHandler {
   var _scannerProcessing = false;
 
   Future<List<Barcode>> handleInputImage(InputImage image) async {
-    if (_scannerProcessing) {
-      return [];
+    final scanner = barcodeScanner;
+    try {
+      if (_scannerProcessing) {
+        return [];
+      }
+      _scannerProcessing = true;
+
+      try {
+        final barcodeList = await scanner.processImage(image);
+
+        if (kDebugMode) {
+          for (final barcode in barcodeList) {
+            final bounds = barcode.boundingBox;
+            final corners = barcode.cornerPoints;
+            final rawValue = barcode.rawValue;
+            log('bounds: $bounds');
+            log('corners: $corners');
+            log('rawValue: $rawValue');
+          }
+        }
+
+        return barcodeList;
+      } catch (e) {
+        log('handleInputImage error: $e');
+        return [];
+      }
+    } finally {
+      scanner.close();
+      _scannerProcessing = false;
     }
-    _scannerProcessing = true;
-
-    final barcodeList = await barcodeScanner.processImage(image);
-
-    // print('barcodeList: ${barcodeList.length}');
-
-    for (final barcode in barcodeList) {
-      final bounds = barcode.boundingBox;
-      final corners = barcode.cornerPoints;
-      final rawValue = barcode.rawValue;
-      log('bounds: $bounds');
-      log('corners: $corners');
-      log('rawValue: $rawValue');
-    }
-
-    _scannerProcessing = false;
-
-    return barcodeList;
-  }
-
-  Future<void> close() async {
-    await barcodeScanner.close();
   }
 
   InputImage? _convertImage(CameraDescription camera, CameraImage cameraImage) {

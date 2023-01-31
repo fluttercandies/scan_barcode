@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:qr_camera/qr_camera.dart';
+import 'package:scan_barcode/scan_barcode.dart';
 
 class BarcodeWidget extends StatefulWidget {
   const BarcodeWidget({
@@ -18,18 +18,38 @@ class BarcodeWidget extends StatefulWidget {
 }
 
 class _BarcodeWidgetState extends State<BarcodeWidget> {
-  final handler = QrcodeHandler();
+  late var handler = BarcodeHandler(
+    formats: widget.scanValue.barcodeConfig.formats,
+  );
 
   final ValueNotifier<BarcodeData?> barcodeData = ValueNotifier(null);
 
   var callerIsHandle = false;
 
   @override
+  void initState() {
+    super.initState();
+    widget.scanValue.addListener(onChange);
+  }
+
+  @override
+  void dispose() {
+    widget.scanValue.removeListener(onChange);
+    super.dispose();
+  }
+
+  void onChange() {
+    handler = BarcodeHandler(
+      formats: widget.scanValue.barcodeConfig.formats,
+    );
+  }
+
+  @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder<BarcodeData?>(
       valueListenable: barcodeData,
       builder: (BuildContext context, BarcodeData? data, Widget? child) {
-        return CameraWidget(
+        return CameraImageWidget(
           onImageCaptured: (CameraDescription camera, CameraImage image) async {
             await handler.handleCameraImage(
               camera,

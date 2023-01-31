@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:qr_camera/qr_camera.dart';
+import 'package:scan_barcode/scan_barcode.dart';
 
 class BarcodeScanPage extends StatefulWidget {
   const BarcodeScanPage({

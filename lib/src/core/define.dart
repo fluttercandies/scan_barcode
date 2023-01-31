@@ -1,4 +1,4 @@
-import 'package:qr_camera/qr_camera.dart';
+import 'package:scan_barcode/scan_barcode.dart';
 
 typedef OnHandleBarcodeList = Future<void> Function(List<Barcode> barCode);
 

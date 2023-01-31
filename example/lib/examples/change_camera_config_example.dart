@@ -1,7 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:qr_camera/qr_camera.dart';
+import 'package:scan_barcode/scan_barcode.dart';
 
 class ChangeCameraConfigExample extends StatefulWidget {
   const ChangeCameraConfigExample({Key? key}) : super(key: key);

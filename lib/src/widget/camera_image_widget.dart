@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:qr_camera/qr_camera.dart';
+import 'package:scan_barcode/scan_barcode.dart';
 
-class CameraWidget extends StatefulWidget {
-  const CameraWidget({
+class CameraImageWidget extends StatefulWidget {
+  const CameraImageWidget({
     Key? key,
     required this.onImageCaptured,
     required this.config,
@@ -16,10 +16,10 @@ class CameraWidget extends StatefulWidget {
   final Widget? child;
 
   @override
-  State<CameraWidget> createState() => _CameraWidgetState();
+  State<CameraImageWidget> createState() => _CameraImageWidgetState();
 }
 
-class _CameraWidgetState extends State<CameraWidget> {
+class _CameraImageWidgetState extends State<CameraImageWidget> {
   CameraConfig get config => widget.config;
 
   CameraController? controller;
@@ -67,7 +67,7 @@ class _CameraWidgetState extends State<CameraWidget> {
   }
 
   @override
-  void didUpdateWidget(covariant CameraWidget oldWidget) {
+  void didUpdateWidget(covariant CameraImageWidget oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.config != widget.config) {
       recreateCamera();

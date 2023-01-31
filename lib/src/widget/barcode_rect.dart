@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:qr_camera/qr_camera.dart';
+import 'package:scan_barcode/scan_barcode.dart';
 
-typedef BarcodeRectItemBuilder = Widget Function(
+typedef BarcodeOverlayBuilder = Widget Function(
   BuildContext context,
   Barcode barcode,
 );
@@ -74,7 +74,7 @@ class BarcodeRectWidget extends StatelessWidget {
   }
 
   Widget _buildItem(BuildContext context, Barcode barcode) {
-    final barcodeRectItemBuilder = uiConfig.barcodeRectItemBuilder;
+    final barcodeRectItemBuilder = uiConfig.barcodeOverlayBuilder;
     if (barcodeRectItemBuilder != null) {
       return barcodeRectItemBuilder(context, barcode);
     }

@@ -1,5 +1,5 @@
 import 'package:flutter/services.dart';
-import 'package:qr_camera/qr_camera.dart';
+import 'package:scan_barcode/scan_barcode.dart';
 
 extension CameraControllerExt on CameraController {
   Size? get size {

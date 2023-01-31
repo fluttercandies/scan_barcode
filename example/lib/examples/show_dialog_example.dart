@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:qr_camera/qr_camera.dart';
+import 'package:scan_barcode/scan_barcode.dart';
 
 class ShowDialogExample extends StatelessWidget {
   const ShowDialogExample({
@@ -37,7 +37,7 @@ class ShowDialogExample extends StatelessWidget {
               ],
             ),
             actions: [
-              TextButton(
+              ElevatedButton(
                 onPressed: () {
                   Navigator.of(context).pop();
                 },

@@ -89,7 +89,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget _buildChangeQrcodeRect() {
     return buildNavigatorItem(
       'Change qrcode rect',
-      const ChangeQrcodeRectExample(),
+      const CustomBarcodeOverlayExample(),
     );
   }
 }
