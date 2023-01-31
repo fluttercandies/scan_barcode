@@ -1,4 +1,5 @@
 import 'package:example/examples/change_camera_config_example.dart';
+import 'package:example/examples/change_qrcode_rect.dart';
 import 'package:flutter/material.dart';
 
 import 'examples/show_dialog_example.dart';
@@ -43,6 +44,7 @@ class _MyHomePageState extends State<MyHomePage> {
           children: [
             _buildCameraScan(),
             _buildChangeCameraConfig(),
+            _buildChangeQrcodeRect(),
           ],
         ),
       ),
@@ -81,6 +83,13 @@ class _MyHomePageState extends State<MyHomePage> {
     return buildNavigatorItem(
       'Change camera config',
       const ChangeCameraConfigExample(),
+    );
+  }
+
+  Widget _buildChangeQrcodeRect() {
+    return buildNavigatorItem(
+      'Change qrcode rect',
+      const ChangeQrcodeRectExample(),
     );
   }
 }

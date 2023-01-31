@@ -7,6 +7,7 @@ export 'src/widget/camera_widget.dart';
 export 'src/widget/barcode_widget.dart';
 export 'src/widget/qrcode_scan_page.dart';
 export 'src/widget/copied_camera_preview.dart';
+export 'src/widget/barcode_rect.dart';
 
 export 'src/helper/qr_handler.dart';
 export 'src/helper/logger.dart' hide log;

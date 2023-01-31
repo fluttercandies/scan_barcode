@@ -1,15 +1,28 @@
 part of 'config.dart';
 
-typedef BarcodeCanvasBuilder = Widget Function(
+typedef BarcodeItemBuilder = Widget Function(
   BuildContext context,
   List<Barcode> barCode,
-  Widget child,
 );
 
 class UIConfig {
   const UIConfig({
     this.barcodeCanvasBuilder,
+    this.barcodeRectItemBuilder,
   });
 
-  final BarcodeCanvasBuilder? barcodeCanvasBuilder;
+  final BarcodeItemBuilder? barcodeCanvasBuilder;
+
+  final BarcodeRectItemBuilder? barcodeRectItemBuilder;
+}
+
+Widget defaultBuildBarcodeRect(
+  BuildContext context,
+  BarcodeData barcodeData,
+  UIConfig config,
+) {
+  return BarcodeRectWidget(
+    uiConfig: config,
+    barcodeData: barcodeData,
+  );
 }
