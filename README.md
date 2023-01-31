@@ -164,7 +164,7 @@ class ShowDialogExample extends StatelessWidget {
 
 </details>
 
-### description
+### Examples
 
 [How to change config](example/lib/examples/change_camera_config_example.dart)
 [How to custom barcode rect](example/lib/examples/change_qrcode_rect.dart)
