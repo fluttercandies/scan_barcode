@@ -164,6 +164,13 @@ class ShowDialogExample extends StatelessWidget {
 
 </details>
 
+### description
+
+[How to change config](example/lib/examples/change_camera_config_example.dart)
+[How to custom barcode rect](example/lib/examples/change_qrcode_rect.dart)
+[One shot scan](example/lib/examples/scan_and_pop_page_example.dart)
+[Show the barcode list dialog when scanned](example/lib/examples/show_dialog_example.dart)
+
 ## dependencies
 
 - [flutter](https://github.com/flutter/flutter)
