@@ -9,6 +9,20 @@ dependencies:
   scan_barcode: ^0.1.0
 ```
 
+```yaml
+scan_barcode:
+  git:
+    url: https://github.com/FlutterCandies/scan_barcode.git
+    ref: git-ref
+```
+
+```yaml
+scan_barcode:
+  git:
+    url: https://gitee.com/kikt/scan_barcode.git
+    ref: git-ref
+```
+
 See the package [scan_barcode](https://pub.dev/packages/scan_barcode) for more version.
 
 `import 'package:scan_barcode/scan_barcode.dart';`
