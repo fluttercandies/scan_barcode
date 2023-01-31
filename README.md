@@ -28,7 +28,7 @@ See the package [scan_barcode](https://pub.dev/packages/scan_barcode) for more v
 `import 'package:scan_barcode/scan_barcode.dart';`
 
 The plugin is developed by version 3.1.0 of flutter, so it is recommended to use version 3.1.0 or above.
-If you want to use version 2.0.0, click [here](#using-in-flutter-2x).
+If you want to use the package of Flutter 2.x, click [here](#using-in-flutter-2x).
 
 ## Contents
 
