@@ -14,6 +14,14 @@ class ScanValue extends ChangeNotifier {
     this.uiConfig = const UIConfig(),
   });
 
+  factory ScanValue.format([
+    List<BarcodeFormat> barcodeFormats = const [BarcodeFormat.all],
+  ]) {
+    return ScanValue(
+      barcodeConfig: BarcodeConfig(formats: barcodeFormats),
+    );
+  }
+
   CameraConfig cameraConfig;
   BarcodeConfig barcodeConfig;
   UIConfig uiConfig;

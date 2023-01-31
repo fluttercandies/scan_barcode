@@ -16,9 +16,90 @@ See the package [scan_barcode](https://pub.dev/packages/scan_barcode) for more v
 The plugin is developed by version 3.1.0 of flutter, so it is recommended to use version 3.1.0 or above.
 If you want to use version 2.0.0, click [here](#using-in-flutter-2x).
 
+## Contents
+
+The package has the following important classes:
+
+- [BarcodeWidget](#BarcodeWidget)
+- [BarcodeConfig](#BarcodeConfig)
+
+### BarcodeWidget
+
+In most cases, we will use this component to complete code scanning.
+
+### BarcodeConfig
+
+This class is used to configure the scanning config. And, hold instance to update config.
+
+The config has the following parts:
+
+- CameraConfig: The camera config.
+- BarcodeConfig: The barcode config.
+- UIConfig: The UI config.
+
 ## Example
 
 See the [example](./example/lib/examples) for more examples.
+
+### One shot scan code
+
+If you want to scan a code once, you can use the example.
+<details>
+
+<summary>Click to expand code</summary>
+
+```dart
+Future<void> _scanBarcode() async {
+  final barcodes = await Navigator.push<List<Barcode>>(
+    context,
+    MaterialPageRoute(
+      builder: (context) => const ScanAndPopPageExample(),
+    ),
+  );
+  if (barcodes == null) return;
+  showBarcodeListDialog(context, barcodes); // show barcode list dialog to display barcode.
+}
+```
+
+```dart
+import 'package:flutter/material.dart';
+import 'package:scan_barcode/scan_barcode.dart';
+
+class ScanAndPopPageExample extends StatefulWidget {
+  const ScanAndPopPageExample({Key? key}) : super(key: key);
+
+  @override
+  State<ScanAndPopPageExample> createState() => _ScanAndPopPageExampleState();
+}
+
+class _ScanAndPopPageExampleState extends State<ScanAndPopPageExample> {
+  var isPop = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return BarcodeWidget(
+      onHandleBarcodeList: (List<Barcode> barcode) async {
+        if (isPop) { // Prevent multiple pop
+          return;
+        }
+        if (barcode.isEmpty) return;
+        isPop = true;
+        Navigator.of(context).pop(barcode);
+      },
+      scanValue: ScanValue(),
+    );
+  }
+}
+
+```
+
+</details>
+
+### Scan and show dialog in current page
+
+<details>
+
+<summary>Click to expand code</summary>
 
 ```dart
 import 'package:flutter/material.dart';
@@ -80,6 +161,8 @@ class ShowDialogExample extends StatelessWidget {
   }
 }
 ```
+
+</details>
 
 ## dependencies
 

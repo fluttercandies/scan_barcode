@@ -1,6 +1,9 @@
+import 'package:example/examples/barcode_list_dialog.dart';
 import 'package:example/examples/change_camera_config_example.dart';
 import 'package:example/examples/change_qrcode_rect.dart';
+import 'package:example/examples/scan_and_pop_page_example.dart';
 import 'package:flutter/material.dart';
+import 'package:scan_barcode/scan_barcode.dart';
 
 import 'examples/show_dialog_example.dart';
 
@@ -45,16 +48,26 @@ class _MyHomePageState extends State<MyHomePage> {
             _buildCameraScan(),
             _buildChangeCameraConfig(),
             _buildChangeQrcodeRect(),
+            _buildOneShotScan(),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildCameraScan() {
-    return buildNavigatorItem(
-      'Show dialog when scanned',
-      const ShowDialogExample(),
+  Widget buildButton(String title, VoidCallback onPressed) {
+    return SizedBox(
+      width: double.infinity,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
+          horizontal: 10,
+          vertical: 5,
+        ),
+        child: ElevatedButton(
+          onPressed: onPressed,
+          child: Text(title),
+        ),
+      ),
     );
   }
 
@@ -79,6 +92,13 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
+  Widget _buildCameraScan() {
+    return buildNavigatorItem(
+      'Show dialog when scanned',
+      const ShowDialogExample(),
+    );
+  }
+
   Widget _buildChangeCameraConfig() {
     return buildNavigatorItem(
       'Change camera config',
@@ -90,6 +110,22 @@ class _MyHomePageState extends State<MyHomePage> {
     return buildNavigatorItem(
       'Change qrcode rect',
       const CustomBarcodeOverlayExample(),
+    );
+  }
+
+  Widget _buildOneShotScan() {
+    return buildButton(
+      'One shot scan',
+      () async {
+        final barcodes = await Navigator.push<List<Barcode>>(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const ScanAndPopPageExample(),
+          ),
+        );
+        if (barcodes == null) return;
+        showBarcodeListDialog(context, barcodes);
+      },
     );
   }
 }
