@@ -38,3 +38,13 @@ extension CameraControllerExt on CameraController {
             value.deviceOrientation);
   }
 }
+
+extension InputImageExt on InputImageData {
+  Size get fixedSize {
+    if (imageRotation.rawValue == 90 || imageRotation.rawValue == 270) {
+      return Size(size.height, size.width);
+    } else {
+      return size;
+    }
+  }
+}

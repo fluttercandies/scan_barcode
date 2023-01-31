@@ -4,6 +4,13 @@ import 'package:flutter/foundation.dart';
 
 import 'logger.dart';
 
+class BarcodeData {
+  final List<Barcode> barcodeList;
+  final InputImage image;
+
+  BarcodeData(this.barcodeList, this.image);
+}
+
 class QrcodeHandler {
   // late final List<BarcodeFormat> formats = [BarcodeFormat.all];
   late final List<BarcodeFormat> formats = [BarcodeFormat.qrCode];
@@ -15,7 +22,8 @@ class QrcodeHandler {
   Future<void> handleCameraImage(
     CameraDescription camera,
     CameraImage cameraImage,
-    Future<void> Function(List<Barcode>) onHandleBarcodeList,
+    Future<void> Function(BarcodeData barcodeData)
+        onHandleBarcode,
   ) async {
     // print('handle image: ${cameraImage.width}x${cameraImage.height}');
 
@@ -41,11 +49,14 @@ class QrcodeHandler {
     final barcodeList = await handleInputImage(inputImage);
     if (barcodeList.isNotEmpty) {
       try {
-        log('识别到二维码: ${barcodeList.length}');
-        await onHandleBarcodeList(barcodeList);
+        log('camera image found barcode: ${barcodeList.length}');
+        await onHandleBarcode(BarcodeData(barcodeList, inputImage));
       } catch (e) {
         log('onHandleBarcodeList error: $e');
       }
+    } else {
+      log('camera image not found barcode');
+      await onHandleBarcode(BarcodeData(barcodeList, inputImage));
     }
 
     _isProcessing = false;
@@ -58,7 +69,6 @@ class QrcodeHandler {
     if (_scannerProcessing) {
       return [];
     }
-
     _scannerProcessing = true;
 
     final barcodeList = await barcodeScanner.processImage(image);

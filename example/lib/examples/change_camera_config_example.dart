@@ -100,6 +100,9 @@ class _ChangeCameraConfigExampleState extends State<ChangeCameraConfigExample> {
   }
 
   Future<void> onHandleBarcodeList(List<Barcode> barCode) async {
+    if(barCode.isEmpty) {
+      return;
+    }
     log(barCode.map((e) => e.rawValue).join('\n'));
     await Future.delayed(const Duration(seconds: 3));
   }

@@ -11,6 +11,6 @@ void hideLog() {
 void log(Object message) {
   if (_showLog) {
     // ignore: avoid_print
-    print(message);
+    print('qr_camera: $message');
   }
 }

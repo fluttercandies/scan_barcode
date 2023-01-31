@@ -7,11 +7,13 @@ class CameraWidget extends StatefulWidget {
     required this.onImageCaptured,
     required this.config,
     required this.onCameraControllerCreate,
+    this.child,
   }) : super(key: key);
 
   final Function(CameraDescription camera, CameraImage image) onImageCaptured;
   final CameraConfig config;
   final OnCameraControllerCreate onCameraControllerCreate;
+  final Widget? child;
 
   @override
   State<CameraWidget> createState() => _CameraWidgetState();
@@ -114,6 +116,7 @@ class _CameraWidgetState extends State<CameraWidget> {
         },
         child: CameraPreview(
           controller,
+          child: widget.child,
         ),
       ),
     );

@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:qr_camera/qr_camera.dart';
@@ -13,6 +12,7 @@ class ShowDialogExample extends StatelessWidget {
     return BarcodeScanPage(
       title: 'Show dialog when scanned',
       onHandleBarcodeList: (List<Barcode> barCode) async {
+        if (barCode.isEmpty) return;
         await showDialog(
           context: context,
           builder: (context) => AlertDialog(

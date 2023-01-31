@@ -1,11 +1,10 @@
 import 'package:example/examples/change_camera_config_example.dart';
 import 'package:flutter/material.dart';
-import 'package:qr_camera/qr_camera.dart';
 
 import 'examples/show_dialog_example.dart';
 
 void main() {
-  showLog();
+  // showLog();
   runApp(const MyApp());
 }
 
