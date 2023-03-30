@@ -34,8 +34,8 @@ If you want to use the package of Flutter 2.x, click [here](#using-in-flutter-2x
 
 The package has the following important classes:
 
-- [BarcodeWidget](#BarcodeWidget)
-- [BarcodeConfig](#BarcodeConfig)
+- [BarcodeWidget](#barcodewidget)
+- [BarcodeConfig](#barcodeconfig)
 
 ### BarcodeWidget
 
@@ -58,6 +58,7 @@ See the [example](./example/lib/examples) for more examples.
 ### One shot scan code
 
 If you want to scan a code once, you can use the example.
+
 <details>
 
 <summary>Click to expand code</summary>
@@ -180,10 +181,10 @@ class ShowDialogExample extends StatelessWidget {
 
 ### Examples
 
-[How to change config](example/lib/examples/change_camera_config_example.dart)
-[How to custom barcode rect](example/lib/examples/change_qrcode_rect.dart)
-[One shot scan](example/lib/examples/scan_and_pop_page_example.dart)
-[Show the barcode list dialog when scanned](example/lib/examples/show_dialog_example.dart)
+- [How to change config](example/lib/examples/change_camera_config_example.dart)
+- [How to custom barcode rect](example/lib/examples/change_qrcode_rect.dart)
+- [One shot scan](example/lib/examples/scan_and_pop_page_example.dart)
+- [Show the barcode list dialog when scanned](example/lib/examples/show_dialog_example.dart)
 
 ## dependencies
 

@@ -5,7 +5,6 @@ extension CameraControllerExt on CameraController {
   Size? get size {
     final src = value.previewSize;
     if (src == null) return null;
-    print('value.deviceOrientation: ${value.deviceOrientation}');
     if (isLandscape()) {
       return Size(src.width.toDouble(), src.height.toDouble());
     } else {
