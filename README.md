@@ -2,6 +2,8 @@
 
 The plugin is a plugin for scanning barcodes. Only support android and ios. Because the plugin is based on Google mlkit.
 
+<img src="https://github.com/FlutterCandies/scan_barcode/blob/main/screenshot/s1.jpg?raw=true" width="300" />
+
 ## Getting Started
 
 ```yaml
