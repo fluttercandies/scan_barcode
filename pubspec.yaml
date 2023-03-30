@@ -8,14 +8,15 @@ environment:
   flutter: ">=1.17.0"
 
 dependencies:
-  camera: ^0.10.0+3
+  camera: ^0.10.3+2
   flutter:
     sdk: flutter
   google_mlkit_barcode_scanning: ^0.5.0
+  google_mlkit_commons: ^0.2.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^1.0.0
+  flutter_lints: ^2.0.1
 
 flutter:
