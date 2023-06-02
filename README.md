@@ -4,11 +4,13 @@ The plugin is a plugin for scanning barcodes. Only support android and ios. Beca
 
 <img src="https://github.com/FlutterCandies/scan_barcode/blob/main/screenshot/s1.jpg?raw=true" width="300" />
 
+See apk in [release](https://github.com/fluttercandies/scan_barcode/releases)
+
 ## Getting Started
 
 ```yaml
 dependencies:
-  scan_barcode: ^0.1.0
+  scan_barcode: ^0.2.0
 ```
 
 ```yaml
@@ -29,7 +31,7 @@ See the package [scan_barcode](https://pub.dev/packages/scan_barcode) for more v
 
 `import 'package:scan_barcode/scan_barcode.dart';`
 
-The plugin is developed by version 3.1.0 of flutter, so it is recommended to use version 3.1.0 or above.
+The plugin is developed by version 3.7.0 of flutter, so it is recommended to use version 3.1.0 or above.
 If you want to use the package of Flutter 2.x, click [here](#using-in-flutter-2x).
 
 ## Contents
@@ -198,11 +200,13 @@ class ShowDialogExample extends StatelessWidget {
 
 ### Using in flutter 2.x
 
-The dependency `google_mlkit_barcode_scanning` is not support flutter 2.x.x, so need use forked version.
-
-add the following to your `pubspec.yaml`:
+Because of the upstream API modification, only `0.1.0` can be used on Flutter 2.x.x.
+Add the following code to your `pubspec.yaml`:
 
 ```yaml
+dependencies:
+  scan_barcode: ^0.1.0
+
 dependency_overrides:
   google_mlkit_barcode_scanning:
     git:
