@@ -4,6 +4,8 @@ The plugin is a plugin for scanning barcodes. Only support android and ios. Beca
 
 <img src="https://github.com/FlutterCandies/scan_barcode/blob/main/screenshot/s1.jpg?raw=true" width="300" />
 
+See apk in [release](https://github.com/fluttercandies/scan_barcode/releases)
+
 ## Getting Started
 
 ```yaml
