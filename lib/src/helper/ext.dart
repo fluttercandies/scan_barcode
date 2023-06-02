@@ -38,9 +38,9 @@ extension CameraControllerExt on CameraController {
   }
 }
 
-extension InputImageExt on InputImageData {
+extension InputImageExt on InputImageMetadata {
   Size get fixedSize {
-    if (imageRotation.rawValue == 90 || imageRotation.rawValue == 270) {
+    if (rotation.rawValue == 90 || rotation.rawValue == 270) {
       return Size(size.height, size.width);
     } else {
       return size;

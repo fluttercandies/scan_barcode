@@ -88,9 +88,9 @@ flutter:
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
 
-dependency_overrides:
-  google_mlkit_barcode_scanning:
-    git:
-      url: https://gitee.com/kikt/Google-Ml-Kit-plugin.git
-      ref: barcode-0.5.0-forked
-      path: packages/google_mlkit_barcode_scanning
+# dependency_overrides:
+#   google_mlkit_barcode_scanning:
+#     git:
+#       url: https://gitee.com/kikt/Google-Ml-Kit-plugin.git
+#       ref: barcode-0.5.0-forked
+#       path: packages/google_mlkit_barcode_scanning

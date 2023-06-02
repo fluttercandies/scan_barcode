@@ -22,7 +22,7 @@ class BarcodeRectWidget extends StatelessWidget {
       builder: (context, constraints) {
         var data = barcodeData;
         if (data == null) return Container();
-        final imageSize = data.image.inputImageData?.fixedSize;
+        final imageSize = data.image.metadata?.fixedSize;
         if (imageSize == null) return Container();
         final barcodeList = data.barcodeList;
         if (barcodeList.isEmpty) return Container();
