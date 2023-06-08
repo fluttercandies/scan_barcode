@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## 0.2.1
+
+- fix: A aspectRatio bug on `CameraImageWidget`.
+- Because the code is not compatible with 3.0.5, upgrade the constraints of flutter to 3.3.0
+
+## 0.2.0
+
+- Bump version
+
 ## 0.1.0
 
 The first version.
