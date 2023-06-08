@@ -31,10 +31,6 @@ class CameraConfig {
       preset: preset ?? this.preset,
     );
   }
-
-  void onChangeController(CameraController? controller) {
-
-  }
 }
 
 Future<CameraController?> defaultCameraControllerCreator(

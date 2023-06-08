@@ -35,8 +35,9 @@ class _CameraImageWidgetState extends State<CameraImageWidget> {
     controller = cameraController;
     try {
       await cameraController.initialize();
-      if (cameraController.size?.aspectRatio != null) {
-        aspectRatio = cameraController.size!.aspectRatio;
+      final size = cameraController.size;
+      if (size != null) {
+        aspectRatio = size.aspectRatio;
       }
 
       if (controller != null) {
@@ -46,8 +47,6 @@ class _CameraImageWidgetState extends State<CameraImageWidget> {
       setState(() {});
       return;
     }
-
-    controller = cameraController;
 
     cameraController.startImageStream((image) async {
       if (controller == null) return;
@@ -107,7 +106,8 @@ class _CameraImageWidgetState extends State<CameraImageWidget> {
         ),
       );
     }
-    return Center(
+    return AspectRatio(
+      aspectRatio: aspectRatio,
       child: GestureDetector(
         onTapDown: (details) async {
           // click to auto focus
