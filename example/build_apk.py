@@ -28,8 +28,8 @@ os.chdir(script_dir)
 upgrade_example_version(f'{script_dir}/pubspec.yaml')
 
 # # build apk
-# cmd = f'flutter build apk --release --split-per-abi'
-# os.system(cmd)
+cmd = f'flutter build apk --release --split-per-abi'
+os.system(cmd)
 
 # files = os.listdir('build/app/outputs/flutter-apk')
 
