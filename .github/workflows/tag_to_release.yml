@@ -9,13 +9,13 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Release
-        uses: caijinglong/action-version-merge@v1
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
       - uses: subosito/flutter-action@v2
         with:
           flutter-version: "3.10.4"
+      - name: Create github release
+        uses: caijinglong/action-version-merge@v1
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Build apk
         run: python3 example/build_apk.py
       - name: upload apk
