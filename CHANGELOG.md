@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.3.0
+
+- Remove an unused field.
+
 ## 0.2.1
 
 - fix: A aspectRatio bug on `CameraImageWidget`.
