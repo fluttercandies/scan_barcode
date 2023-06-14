@@ -16,26 +16,20 @@ class _CustomBarcodeOverlayExampleState extends State<CustomBarcodeOverlayExampl
       appBar: AppBar(
         title: const Text('Change Qrcode Rect style'),
       ),
-      body: Column(
-        children: [
-          Expanded(
-            child: BarcodeWidget(
-              scanValue: ScanValue(
-                uiConfig: UIConfig(
-                  barcodeOverlayBuilder: _buildBarcodeRectItem,
-                ),
-                barcodeConfig: const BarcodeConfig(
-                  formats: [
-                    BarcodeFormat.all,
-                  ],
-                ),
-              ),
-              onHandleBarcodeList: (List<Barcode> barCode) {
-                return Future.value();
-              },
-            ),
+      body: BarcodeWidget(
+        scanValue: ScanValue(
+          uiConfig: UIConfig(
+            barcodeOverlayBuilder: _buildBarcodeRectItem,
           ),
-        ],
+          barcodeConfig: const BarcodeConfig(
+            formats: [
+              BarcodeFormat.all,
+            ],
+          ),
+        ),
+        onHandleBarcodeList: (List<Barcode> barCode) {
+          return Future.value();
+        },
       ),
     );
   }
