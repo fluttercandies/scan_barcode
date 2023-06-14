@@ -17,6 +17,8 @@ jobs:
         run: python3 example/build_apk.py
       - name: upload apk
         run: gh release upload ${{ github.ref }} example/build/app/outputs/flutter-apk/{*.apk,*.sha1} --clobber
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     permissions: # Required, because the action will create a release and branch, so need write permission
       deployments: write
       contents: write
