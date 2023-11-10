@@ -102,6 +102,10 @@ class _CameraImageWidgetState extends State<CameraImageWidget> {
     if (oldWidget.config != widget.config) {
       recreateCamera();
     }
+    if (oldWidget.controller != widget.controller) {
+      oldWidget.controller.removeListener(onStatusChanged);
+      widget.controller.addListener(onStatusChanged);
+    }
   }
 
   @override
@@ -113,6 +117,7 @@ class _CameraImageWidgetState extends State<CameraImageWidget> {
 
   @override
   void dispose() {
+    widget.controller.removeListener(onStatusChanged);
     _dispose();
     super.dispose();
   }
