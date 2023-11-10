@@ -7,12 +7,14 @@ class CameraImageWidget extends StatefulWidget {
     required this.onImageCaptured,
     required this.config,
     required this.onCameraControllerCreate,
+    required this.controller,
     this.child,
   }) : super(key: key);
 
   final Function(CameraDescription camera, CameraImage image) onImageCaptured;
   final CameraConfig config;
   final OnCameraControllerCreate onCameraControllerCreate;
+  final BarcodeController controller;
   final Widget? child;
 
   @override
@@ -23,6 +25,16 @@ class _CameraImageWidgetState extends State<CameraImageWidget> {
   CameraConfig get config => widget.config;
 
   CameraController? controller;
+
+  bool _isStarted = false;
+
+  void onStatusChanged() {
+    if (widget.controller.isScanning) {
+      _start();
+    } else {
+      _stop();
+    }
+  }
 
   Future<void> _initCamera() async {
     final cameraController =
@@ -48,17 +60,36 @@ class _CameraImageWidgetState extends State<CameraImageWidget> {
       return;
     }
 
-    cameraController.startImageStream((image) async {
-      if (controller == null) return;
+    if (widget.controller.isScanning) {
+      _start();
+    }
+
+    setState(() {});
+  }
+
+  void _start() {
+    if (_isStarted) return;
+    controller?.startImageStream((image) async {
+      if (!widget.controller.isScanning) return;
       final camera = controller!.description;
       await widget.onImageCaptured(camera, image);
     });
-    setState(() {});
+
+    _isStarted = controller != null;
+  }
+
+  void _stop() {
+    if (_isStarted) {
+      controller?.stopImageStream();
+      _isStarted = false;
+    }
   }
 
   Future<void> recreateCamera() async {
     if (controller != null) {
-      controller?.stopImageStream();
+      if (widget.controller.isScanning) {
+        _stop();
+      }
       controller?.dispose();
       controller = null;
     }
@@ -77,6 +108,7 @@ class _CameraImageWidgetState extends State<CameraImageWidget> {
   void initState() {
     super.initState();
     _initCamera();
+    widget.controller.addListener(onStatusChanged);
   }
 
   @override
@@ -86,7 +118,9 @@ class _CameraImageWidgetState extends State<CameraImageWidget> {
   }
 
   Future<void> _dispose() async {
-    await controller?.stopImageStream();
+    if (_isStarted) {
+      await controller?.stopImageStream();
+    }
     await controller?.dispose();
   }
 
