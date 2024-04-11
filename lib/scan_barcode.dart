@@ -14,6 +14,7 @@ export 'src/helper/ext.dart';
 
 export 'src/core/config.dart';
 export 'src/core/define.dart';
+export 'src/core/controller.dart';
 
 export 'package:camera/camera.dart';
 export 'package:google_mlkit_barcode_scanning/google_mlkit_barcode_scanning.dart';

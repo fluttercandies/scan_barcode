@@ -12,14 +12,3 @@ class UIConfig {
 
   final BarcodeOverlayBuilder? barcodeOverlayBuilder;
 }
-
-Widget defaultBuildBarcodeRect(
-  BuildContext context,
-  BarcodeData barcodeData,
-  UIConfig config,
-) {
-  return BarcodeRectWidget(
-    uiConfig: config,
-    barcodeData: barcodeData,
-  );
-}

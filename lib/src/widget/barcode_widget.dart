@@ -1,32 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:scan_barcode/scan_barcode.dart';
 
-enum _BarcodeStatus {
-  init,
-  scanning,
-  stop,
-}
-
-class BarcodeController extends ValueNotifier<bool> {
-  BarcodeController({bool autoStart = true})
-      : _status = autoStart ? _BarcodeStatus.scanning : _BarcodeStatus.init,
-        super(false);
-
-  _BarcodeStatus _status;
-
-  bool get isScanning => _status == _BarcodeStatus.scanning;
-
-  void start() {
-    _status = _BarcodeStatus.scanning;
-    value = isScanning;
-  }
-
-  void stop() {
-    _status = _BarcodeStatus.stop;
-    value = isScanning;
-  }
-}
-
 class BarcodeWidget extends StatefulWidget {
   const BarcodeWidget({
     Key? key,
@@ -91,12 +65,18 @@ class _BarcodeWidgetState extends State<BarcodeWidget> {
       builder: (BuildContext context, BarcodeData? data, Widget? child) {
         return CameraImageWidget(
           onImageCaptured: (CameraDescription camera, CameraImage image) async {
-            if (!controller.isScanning) return;
+            if (!controller.isScanning) {
+              barcodeData.value = null;
+              return;
+            }
             return await handler.handleCameraImage(
               camera,
               image,
               (data) async {
-                if (data.barcodeList.isEmpty) return;
+                if (data.barcodeList.isEmpty) {
+                  barcodeData.value = null;
+                  return;
+                }
                 if (controller.isScanning && widget.autoStop) {
                   controller.stop();
                 }
@@ -113,6 +93,7 @@ class _BarcodeWidgetState extends State<BarcodeWidget> {
           child: BarcodeRectWidget(
             barcodeData: data,
             uiConfig: widget.scanValue.uiConfig,
+            controller: controller,
           ),
         );
       },
