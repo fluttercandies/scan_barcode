@@ -7,11 +7,13 @@ class BarcodeScanPage extends StatefulWidget {
     required this.title,
     required this.onHandleBarcodeList,
     this.config,
+    this.controller,
   }) : super(key: key);
 
   final String title;
   final OnHandleBarcodeList onHandleBarcodeList;
   final ScanValue? config;
+  final BarcodeController? controller;
 
   @override
   State<BarcodeScanPage> createState() => _BarcodeScanPageState();

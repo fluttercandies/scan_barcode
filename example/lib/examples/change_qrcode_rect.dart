@@ -42,27 +42,33 @@ class _CustomBarcodeOverlayExampleState
             controller.start();
           }
         },
-        child: ValueListenableBuilder<bool>(
+        child: ValueListenableBuilder<BarcodeScanStatus>(
           valueListenable: controller,
-          builder: (context, isScanning, child) {
-            return Icon(isScanning ? Icons.pause : Icons.play_arrow_rounded);
+          builder: (context, status, child) {
+            return Icon(
+              status.isScaning ? Icons.pause : Icons.play_arrow_rounded,
+            );
           },
         ),
       ),
     );
   }
 
-  Widget _buildBarcodeRectItem(BuildContext context, Barcode barcode) {
+  Widget _buildBarcodeRectItem(
+    BuildContext context,
+    Barcode barcode, {
+    BarcodeController? controller,
+  }) {
     return GestureDetector(
       onTap: () async {
-        controller.stop();
+        controller?.stop();
         await showDialog(
           context: context,
           builder: (context) => AlertDialog(
             title: Text(barcode.rawValue ?? ''),
           ),
         );
-        controller.start();
+        controller?.start();
       },
       child: Container(
         decoration: BoxDecoration(
