@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.3.1
+
+- Upgrade dependencies version.
+
 ## 0.3.0
 
 - Remove an unused field.

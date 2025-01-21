@@ -1,6 +1,6 @@
 name: scan_barcode
 description: A flutter plugin to scan barcode. base the Google mlkit. Support android and iOS.
-version: 0.3.0
+version: 0.3.1
 homepage: https://github.com/fluttercandies/scan_barcode
 
 environment:
