@@ -1,8 +1,13 @@
 # CHANGELOG
 
+## 0.3.1
+
+- Upgrade dependencies version.
+
 ## 0.3.0
 
 - Remove an unused field.
+- Add `BarcodeController` to control the barcode scanner to start, stop handle barcodes.
 
 ## 0.2.1
 

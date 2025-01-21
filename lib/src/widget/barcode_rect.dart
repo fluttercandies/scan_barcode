@@ -3,49 +3,56 @@ import 'package:scan_barcode/scan_barcode.dart';
 
 typedef BarcodeOverlayBuilder = Widget Function(
   BuildContext context,
-  Barcode barcode,
-);
+  Barcode barcode, {
+  BarcodeController? controller,
+});
 
 class BarcodeRectWidget extends StatelessWidget {
   const BarcodeRectWidget({
     Key? key,
     required this.barcodeData,
     required this.uiConfig,
+    required this.controller,
   }) : super(key: key);
 
   final BarcodeData? barcodeData;
   final UIConfig uiConfig;
+  final BarcodeController controller;
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        var data = barcodeData;
-        if (data == null) return Container();
-        final imageSize = data.image.metadata?.fixedSize;
-        if (imageSize == null) return Container();
-        final barcodeList = data.barcodeList;
-        if (barcodeList.isEmpty) return Container();
+    return ValueListenableBuilder(
+      valueListenable: controller,
+      builder: (context, value, child) => LayoutBuilder(
+        builder: (context, constraints) {
+          var data = barcodeData;
+          if (data == null) return Container();
+          final imageSize = data.image.metadata?.fixedSize;
+          if (imageSize == null) return Container();
+          final barcodeList = data.barcodeList;
+          if (barcodeList.isEmpty) return Container();
 
-        final width = imageSize.width;
-        final height = imageSize.height;
+          final width = imageSize.width;
+          final height = imageSize.height;
 
-        final scaleX = constraints.maxWidth / width;
-        final scaleY = constraints.maxHeight / height;
+          final scaleX = constraints.maxWidth / width;
+          final scaleY = constraints.maxHeight / height;
 
-        return Stack(
-          children: [
-            ...barcodeList
-                .map((barcode) => _buildBarcode(
-                      context,
-                      barcode,
-                      scaleX,
-                      scaleY,
-                    ))
-                .whereType<Widget>()
-          ],
-        );
-      },
+          return Stack(
+            children: [
+              ...barcodeList
+                  .map((barcode) => _buildBarcode(
+                        context,
+                        barcode,
+                        scaleX,
+                        scaleY,
+                        controller,
+                      ))
+                  .whereType<Widget>()
+            ],
+          );
+        },
+      ),
     );
   }
 
@@ -54,6 +61,7 @@ class BarcodeRectWidget extends StatelessWidget {
     Barcode barcode,
     double scaleX,
     double scaleY,
+    BarcodeController controller,
   ) {
     final rect = barcode.boundingBox;
 
@@ -69,15 +77,29 @@ class BarcodeRectWidget extends StatelessWidget {
       top: top,
       width: width,
       height: height,
-      child: _buildItem(context, barcode),
+      child: _buildItem(context, barcode, controller),
     );
   }
 
-  Widget _buildItem(BuildContext context, Barcode barcode) {
+  Widget _buildItem(
+    BuildContext context,
+    Barcode barcode,
+    BarcodeController controller,
+  ) {
     final barcodeRectItemBuilder = uiConfig.barcodeOverlayBuilder;
+
     if (barcodeRectItemBuilder != null) {
-      return barcodeRectItemBuilder(context, barcode);
+      return barcodeRectItemBuilder(
+        context,
+        barcode,
+        controller: controller,
+      );
     }
+
+    if (!controller.isScanning) {
+      return Container();
+    }
+
     return Container(
       decoration: BoxDecoration(
         border: Border.all(
