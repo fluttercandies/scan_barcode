@@ -6,12 +6,16 @@ class BarcodeWidget extends StatefulWidget {
     Key? key,
     required this.onHandleBarcodeList,
     required this.scanValue,
+    this.controller,
     this.onCameraControllerCreate,
+    this.autoStop = false,
   }) : super(key: key);
 
   final OnHandleBarcodeList onHandleBarcodeList;
   final ScanValue scanValue;
   final OnCameraControllerCreate? onCameraControllerCreate;
+  final BarcodeController? controller;
+  final bool autoStop;
 
   @override
   State<BarcodeWidget> createState() => _BarcodeWidgetState();
@@ -23,6 +27,7 @@ class _BarcodeWidgetState extends State<BarcodeWidget> {
   );
 
   final ValueNotifier<BarcodeData?> barcodeData = ValueNotifier(null);
+  late BarcodeController controller = widget.controller ?? BarcodeController();
 
   var callerIsHandle = false;
 
@@ -38,6 +43,15 @@ class _BarcodeWidgetState extends State<BarcodeWidget> {
     super.dispose();
   }
 
+  @override
+  void didUpdateWidget(covariant BarcodeWidget oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.controller != null) {
+      controller = widget.controller!;
+      setState(() {});
+    }
+  }
+
   void onChange() {
     handler = BarcodeHandler(
       formats: widget.scanValue.barcodeConfig.formats,
@@ -51,15 +65,27 @@ class _BarcodeWidgetState extends State<BarcodeWidget> {
       builder: (BuildContext context, BarcodeData? data, Widget? child) {
         return CameraImageWidget(
           onImageCaptured: (CameraDescription camera, CameraImage image) async {
-            await handler.handleCameraImage(
+            if (!controller.isScanning) {
+              barcodeData.value = null;
+              return;
+            }
+            return await handler.handleCameraImage(
               camera,
               image,
               (data) async {
+                if (data.barcodeList.isEmpty) {
+                  barcodeData.value = null;
+                  return;
+                }
+                if (controller.isScanning && widget.autoStop) {
+                  controller.stop();
+                }
                 barcodeData.value = data;
                 _callHandle(data);
               },
             );
           },
+          controller: controller,
           config: widget.scanValue.cameraConfig,
           onCameraControllerCreate: (CameraController controller) {
             widget.onCameraControllerCreate?.call(controller);
@@ -67,6 +93,7 @@ class _BarcodeWidgetState extends State<BarcodeWidget> {
           child: BarcodeRectWidget(
             barcodeData: data,
             uiConfig: widget.scanValue.uiConfig,
+            controller: controller,
           ),
         );
       },
