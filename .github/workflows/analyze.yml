@@ -11,7 +11,7 @@ jobs:
   analyze:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: "Try publish package"
         uses: k-paxian/dart-package-publisher@v1.5.1
         with:
@@ -31,12 +31,12 @@ jobs:
       matrix:
         os: [ ubuntu-latest ]
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
           cache: true
-      - run: flutter --version
+      - run: flutter doctor -v
       - run: flutter pub get
       - run: flutter build apk --debug
         working-directory: example
@@ -49,13 +49,13 @@ jobs:
       matrix:
         os: [ macos-latest ]
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
           architecture: x64
           cache: true
-      - run: flutter --version
+      - run: flutter doctor -v
       - run: flutter pub get
       - run: flutter build ios --no-codesign
         working-directory: example
