@@ -24,6 +24,7 @@ if (flutterVersionName == null) {
 
 android {
     compileSdkVersion 34
+    namespace "com.fluttercandies.scan_barcode_example"
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_17

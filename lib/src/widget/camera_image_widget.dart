@@ -21,7 +21,7 @@ class CameraImageWidget extends StatefulWidget {
   State<CameraImageWidget> createState() => _CameraImageWidgetState();
 }
 
-class _CameraImageWidgetState extends State<CameraImageWidget> {
+class _CameraImageWidgetState extends State<CameraImageWidget> with WidgetsBindingObserver {
   CameraConfig get config => widget.config;
 
   CameraController? controller;
@@ -113,12 +113,14 @@ class _CameraImageWidgetState extends State<CameraImageWidget> {
     super.initState();
     _initCamera();
     widget.controller.addListener(onStatusChanged);
+    WidgetsBinding.instance.addObserver(this);
   }
 
   @override
   void dispose() {
     widget.controller.removeListener(onStatusChanged);
     _dispose();
+    WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
 
@@ -130,6 +132,25 @@ class _CameraImageWidgetState extends State<CameraImageWidget> {
   }
 
   var aspectRatio = 720 / 1280;
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (controller == null) return;
+    
+    // 当应用进入后台时暂停相机
+    if (state == AppLifecycleState.inactive || 
+        state == AppLifecycleState.paused) {
+      if (_isStarted) {
+        _stop();
+      }
+    }
+    // 当应用回到前台时，如果控制器处于扫描状态，则恢复相机
+    else if (state == AppLifecycleState.resumed) {
+      if (widget.controller.isScanning && !_isStarted) {
+        _start();
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {

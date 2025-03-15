@@ -25,14 +25,6 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "0.11.0+2"
-  camera_android:
-    dependency: "direct main"
-    description:
-      name: camera_android
-      sha256: f83e406d34f5faa80bf0f5c3beee4b4c11da94a94e9621c1bb8e312988621b4b
-      url: "https://pub.flutter-io.cn"
-    source: hosted
-    version: "0.10.8+2"
   camera_android_camerax:
     dependency: transitive
     description:

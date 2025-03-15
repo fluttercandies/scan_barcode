@@ -35,7 +35,6 @@ dependencies:
   cupertino_icons: ^1.0.2
   scan_barcode:
     path: ../
-  camera_android: 0.10.8+2
 
 dev_dependencies:
   flutter_test:
