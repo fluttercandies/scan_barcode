@@ -8,20 +8,20 @@ jobs:
       matrix:
         flutter-version:
           # These are the last fix version for each minor in stable.
-          - "3.0.5"
-          - "3.3.10"
           - "3.7.12"
-          - "3.10.4"
+          - "3.24.5"
+          - "3.27.0"
+          - "3.29.0"
       fail-fast: false
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Install Flutter ${{ matrix.flutter-version }}
         uses: subosito/flutter-action@v2
         with:
           flutter-version: "${{ matrix.flutter-version }}"
-      - name: Check Flutter Version
-        run: flutter --version
+      - name: flutter doctor -v
+        run: flutter doctor -v
       - name: Install dependencies
         run: flutter pub get
       - name: build apk

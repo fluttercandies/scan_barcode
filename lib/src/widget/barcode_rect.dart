@@ -65,8 +65,6 @@ class BarcodeRectWidget extends StatelessWidget {
   ) {
     final rect = barcode.boundingBox;
 
-    if (rect == null) return null;
-
     final left = rect.left * scaleX;
     final top = rect.top * scaleY;
     final width = rect.width * scaleX;
